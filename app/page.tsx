@@ -47,8 +47,55 @@ import {
 
 import LanguageDropdown from '@/components/shadcn-studio/blocks/dropdown-language'
 import ProfileDropdown from '@/components/shadcn-studio/blocks/dropdown-profile'
-
+import { TreeView } from '@/components/tree-view'
+interface TreeDataItem {
+    id: string
+    name: string
+    icon?: React.ComponentType<{ className?: string }>
+    selectedIcon?: React.ComponentType<{ className?: string }>
+    openIcon?: React.ComponentType<{ className?: string }>
+    children?: TreeDataItem[]
+    actions?: React.ReactNode
+    onClick?: () => void
+    draggable?: boolean
+    droppable?: boolean
+    disabled?: boolean
+    className?: string
+}
 const ApplicationShell = () => {
+
+  const data: TreeDataItem[] = [
+    {
+        id: '1',
+        name: 'Item 1',
+        children: [
+            {
+                id: '2',
+                name: 'Item 1.1',
+                children: [
+                    {
+                        id: '3',
+                        name: 'Item 1.1.1'
+                    },
+                    {
+                        id: '4',
+                        name: 'Item 1.1.2'
+                    }
+                ]
+            },
+            {
+                id: '5',
+                name: 'Item 1.2 (disabled)',
+                disabled: true
+            }
+        ]
+    },
+    {
+        id: '6',
+        name: 'Item 2 (draggable)',
+        draggable: true
+    }
+]
   return (
     <div className='flex min-h-dvh w-full'>
       <SidebarProvider>
@@ -236,7 +283,9 @@ const ApplicationShell = () => {
           <main className='mx-auto size-full max-w-7xl flex-1 px-4 py-6 sm:px-6'>
             <Card className='h-250'>
               <CardContent className='h-full'>
-                <div className='h-full rounded-md border bg-[repeating-linear-gradient(45deg,var(--muted),var(--muted)_1px,var(--card)_2px,var(--card)_15px)]' />
+                <div className='h-full rounded-md border bg-[repeating-linear-gradient(45deg,var(--muted),var(--muted)_1px,var(--card)_2px,var(--card)_15px)]' >
+                  <TreeView data={data} />
+                </div>
               </CardContent>
             </Card>
           </main>
