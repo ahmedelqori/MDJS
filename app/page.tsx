@@ -1,3 +1,4 @@
+'use client'
 import {
   ArrowRightLeftIcon,
   CalendarClockIcon,
@@ -10,6 +11,7 @@ import {
   FacebookIcon,
   HashIcon,
   InstagramIcon,
+  KanbanIcon,
   LanguagesIcon,
   LinkedinIcon,
   SettingsIcon,
@@ -48,6 +50,9 @@ import {
 import LanguageDropdown from '@/components/shadcn-studio/blocks/dropdown-language'
 import ProfileDropdown from '@/components/shadcn-studio/blocks/dropdown-profile'
 import { TreeView } from '@/components/tree-view'
+import { useState } from 'react'
+import PDFViewer from '@/components/components/PDFViewer'
+import Example from './example/page'
 interface TreeDataItem {
     id: string
     name: string
@@ -62,40 +67,141 @@ interface TreeDataItem {
     disabled?: boolean
     className?: string
 }
+
+  enum Routes {
+    Dashboard = "Dashboard",
+    Planning = 'Planning',
+  }
+
+
 const ApplicationShell = () => {
 
   const data: TreeDataItem[] = [
     {
-        id: '1',
-        name: 'Item 1',
-        children: [
+      id: "1",
+      name: "SAP BTP – Global Account Administration",
+      children: [
+        {
+          id: "2",
+          name: "Subcategory – User & Role Management",
+          children: [
             {
-                id: '2',
-                name: 'Item 1.1',
-                children: [
-                    {
-                        id: '3',
-                        name: 'Item 1.1.1'
-                    },
-                    {
-                        id: '4',
-                        name: 'Item 1.1.2'
-                    }
-                ]
+              id: "3",
+              name: "Policy – Multi-Factor Authentication Enforcement"
             },
             {
-                id: '5',
-                name: 'Item 1.2 (disabled)',
-                disabled: true
+              id: "4",
+              name: "Policy – Password & Authentication Rules",
+              children: [
+                {
+                  id: "41",
+                  name: "Rules – Minimum Password Length & Complexity Requirements"
+                },
+                {
+                  id: "42",
+                  name: "Rules – Password Expiration, Rotation & Lockout Configurations",
+                  children: [
+                    {
+                      id: "421",
+                      name: "Configuration – Expiration Notifications & Forced Reset Policy"
+                    }
+                  ]
+                }
+              ]
             }
-        ]
+          ]
+        },
+        {
+          id: "5",
+          name: "Subcategory – Account Monitoring & Maintenance (Disabled)",
+          disabled: true,
+          children: [
+            {
+              id: "6",
+              name: "Monitoring – Backup Scheduling & Retention Policies"
+            }
+          ]
+        }
+      ]
     },
     {
-        id: '6',
-        name: 'Item 2 (draggable)',
-        draggable: true
+      id: "7",
+      name: "SAP BTP – Observability, Monitoring & Analytics (Draggable)",
+      draggable: true,
+      children: [
+        {
+          id: "8",
+          name: "Analytics Section – Performance & Usage Reports",
+          children: [
+            {
+              id: "9",
+              name: "Report – User Activity & Engagement Metrics by Subaccount"
+            },
+            {
+              id: "10",
+              name: "Report – Application Errors, Logs & Audit Trails Overview",
+              children: [
+                {
+                  id: "101",
+                  name: "Log Category – API Latency & Throughput Degradation Analysis"
+                },
+                {
+                  id: "102",
+                  name: "Log Category – Security Events & Failed Login Attempts"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "11",
+      name: "SAP BTP – Subaccount & Environment Configurations",
+      children: [
+        {
+          id: "12",
+          name: "Environment – Dev Subaccount Configuration",
+          children: [
+            {
+              id: "13",
+              name: "Config – Feature Toggles & Beta Experiment Flags"
+            },
+            {
+              id: "14",
+              name: "Config – Backend Service & Resource Optimization Settings",
+              children: [
+                {
+                  id: "141",
+                  name: "Parameter – Cache Strategy & Invalidation Rules"
+                },
+                {
+                  id: "142",
+                  name: "Parameter – Database Connections & Pooling Thresholds"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "15",
+          name: "Environment – Production Subaccount Settings (Draggable & Disabled)",
+          draggable: true,
+          disabled: true,
+          children: [
+            {
+              id: "16",
+              name: "Deployment Strategy – Zero-Downtime Rollout Configurations"
+            }
+          ]
+        }
+      ]
     }
-]
+  ];
+
+
+  const [route, setRoute] = useState<Routes>(Routes.Dashboard)
+
   return (
     <div className='flex min-h-dvh w-full'>
       <SidebarProvider>
@@ -104,7 +210,7 @@ const ApplicationShell = () => {
             <SidebarGroup>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  <SidebarMenuItem>
+                  <SidebarMenuItem onClick={() => setRoute(Routes.Dashboard)}>
                     <SidebarMenuButton asChild>
                       <a href='#'>
                         <ChartNoAxesCombinedIcon />
@@ -120,23 +226,29 @@ const ApplicationShell = () => {
               <SidebarGroupLabel>Pages</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  <SidebarMenuItem>
+                  <SidebarMenuItem onClick={() => setRoute(Routes.Dashboard)}>
                     <SidebarMenuButton asChild>
                       <a href='#'>
                         <ChartSplineIcon />
-                        <span>Content Performance</span>
+                        <span>Dashboard</span>
                       </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                  <SidebarMenuItem>
+                  <SidebarMenuItem onClick={() => setRoute(Routes.Planning)}>
                     <SidebarMenuButton asChild>
                       <a href='#'>
-                        <UsersIcon />
-                        <span>Audience Insight</span>
+                        {/* <UsersIcon /> */}
+                        <KanbanIcon />
+                        <span>Project Planning</span>
                       </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
+                    <div className='overflow-x-scroll'>
+                      <TreeView data={data}/>
+                    </div>
+                  </SidebarMenuItem>
+                  {/*<SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <a href='#'>
                         <ChartPieIcon />
@@ -184,11 +296,11 @@ const ApplicationShell = () => {
                         <span>Influencer</span>
                       </a>
                     </SidebarMenuButton>
-                  </SidebarMenuItem>
+                  </SidebarMenuItem> */}
                 </SidebarMenu>
               </SidebarGroupContent>
-            </SidebarGroup>
-            <SidebarGroup>
+             </SidebarGroup>
+            {/*<SidebarGroup>
               <SidebarGroupLabel>Supporting Features</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
@@ -234,7 +346,7 @@ const ApplicationShell = () => {
                   </SidebarMenuItem>
                 </SidebarMenu>
               </SidebarGroupContent>
-            </SidebarGroup>
+            </SidebarGroup> */}
           </SidebarContent>
         </Sidebar>
         <div className='flex flex-1 flex-col'>
@@ -283,9 +395,22 @@ const ApplicationShell = () => {
           <main className='mx-auto size-full max-w-7xl flex-1 px-4 py-6 sm:px-6'>
             <Card className='h-250'>
               <CardContent className='h-full'>
-                <div className='h-full rounded-md border bg-[repeating-linear-gradient(45deg,var(--muted),var(--muted)_1px,var(--card)_2px,var(--card)_15px)]' >
-                  <TreeView data={data} />
-                </div>
+                {/* <div className='h-full rounded-md border bg-[repeating-linear-gradient(45deg,var(--muted),var(--muted)_1px,var(--card)_2px,var(--card)_15px)]' > */}
+                  {/* <TreeView data={data} /> */}
+                  {route === Routes.Dashboard && 
+                    <>
+                      {/* <div>Dashboard</div> */}
+                      <PDFViewer />
+                    </>
+                  }
+                  {route === Routes.Planning && 
+                    <>
+                      {/* <TreeView data={data} />  */}
+                      {/* <div>Planning</div> */}
+                    <Example/>
+                    </>
+                  }
+                {/* </div> */}
               </CardContent>
             </Card>
           </main>
