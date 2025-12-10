@@ -20,6 +20,10 @@ import {
   Undo2Icon,
   UsersIcon
 } from 'lucide-react'
+import {
+  AvatarGroup,
+  AvatarMore,
+} from "@/components/shadcnblocks/avatar-group";
 
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -53,6 +57,7 @@ import { TreeView } from '@/components/tree-view'
 import { useState } from 'react'
 import PDFViewer from '@/components/components/PDFViewer'
 import Example from './example/page'
+import GrantCustom from '@/components/grant-custom'
 interface TreeDataItem {
     id: string
     name: string
@@ -404,11 +409,31 @@ const ApplicationShell = () => {
                     </>
                   }
                   {route === Routes.Planning && 
-                    <>
+                    <div className='w-full flex flex-col'>
                       {/* <TreeView data={data} />  */}
                       {/* <div>Planning</div> */}
+                       <AvatarGroup className=' flex justify-end'>
+                        <Avatar>
+                          <AvatarImage src="https://github.com/haydenbleasel.png" />
+                          <AvatarFallback>HB</AvatarFallback>
+                        </Avatar>
+                        <Avatar>
+                          <AvatarImage src="https://github.com/shadcn.png" />
+                          <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                        <Avatar>
+                          <AvatarImage src="https://github.com/leerob.png" />
+                          <AvatarFallback>LR</AvatarFallback>
+                        </Avatar>
+                        <Avatar>
+                          <AvatarImage src="https://github.com/serafimcloud.png" />
+                          <AvatarFallback>SC</AvatarFallback>
+                        </Avatar>
+                        <AvatarMore count={2} />
+                      </AvatarGroup>
                     <Example/>
-                    </>
+                    {/* <GrantCustom/> */}
+                    </div>
                   }
                 {/* </div> */}
               </CardContent>
