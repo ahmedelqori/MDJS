@@ -21,6 +21,10 @@ import {
   Undo2Icon,
   UsersIcon
 } from 'lucide-react'
+import {
+  AvatarGroup,
+  AvatarMore,
+} from "@/components/shadcnblocks/avatar-group";
 
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -55,6 +59,7 @@ import { useState } from 'react'
 import PDFViewer from '@/components/components/PDFViewer'
 import DataTable from '@/components/components/DataTable'
 import Example from './example/page'
+import GrantCustom from '@/components/grant-custom'
 interface TreeDataItem {
     id: string
     name: string
@@ -404,43 +409,48 @@ const ApplicationShell = () => {
               </div>
             </div>
           </header>
-          <div className='flex flex-1 flex-col overflow-hidden'>
-            <main className='flex-1 overflow-hidden'>
-              <div className={`grid h-full ${route === Routes.Files ? 'grid-cols-[1fr_320px]' : 'grid-cols-1'}`}>
-                <div className='mx-auto size-full max-w-7xl flex-1 px-4 py-6 sm:px-6 overflow-auto'>
-                  <Card className='h-full min-h-[calc(100vh-200px)]'>
-                    <CardContent className='h-full'>
-                      {/* <div className='h-full rounded-md border bg-[repeating-linear-gradient(45deg,var(--muted),var(--muted)_1px,var(--card)_2px,var(--card)_15px)]' > */}
-                        {/* <TreeView data={data} /> */}
-                        {route === Routes.Dashboard && 
-                          <>
-                            {/* <div>Dashboard</div> */}
-                            <PDFViewer />
-                          </>
-                        }
-                        {route === Routes.Planning && 
-                          <>
-                            {/* <TreeView data={data} />  */}
-                            {/* <div>Planning</div> */}
-                          <Example/>
-                          </>
-                        }
-                        {route === Routes.Files && 
-                          <>
-                            <DataTable/>
-                          </>
-                        }
-                      {/* </div> */}
-                    </CardContent>
-                  </Card>
-                </div>
-                {route === Routes.Files && (
-                  <div className='h-full overflow-hidden border-l bg-card'>
-                  </div>
-                )}
-              </div>
-            </main>
-          </div>
+          <main className='mx-auto size-full max-w-7xl flex-1 px-4 py-6 sm:px-6'>
+            <Card className='h-250'>
+              <CardContent className='h-full'>
+                {/* <div className='h-full rounded-md border bg-[repeating-linear-gradient(45deg,var(--muted),var(--muted)_1px,var(--card)_2px,var(--card)_15px)]' > */}
+                  {/* <TreeView data={data} /> */}
+                  {route === Routes.Dashboard && 
+                    <>
+                      {/* <div>Dashboard</div> */}
+                      <PDFViewer />
+                    </>
+                  }
+                  {route === Routes.Planning && 
+                    <div className='w-full flex flex-col'>
+                      {/* <TreeView data={data} />  */}
+                      {/* <div>Planning</div> */}
+                       <AvatarGroup className=' flex justify-end'>
+                        <Avatar>
+                          <AvatarImage src="https://github.com/haydenbleasel.png" />
+                          <AvatarFallback>HB</AvatarFallback>
+                        </Avatar>
+                        <Avatar>
+                          <AvatarImage src="https://github.com/shadcn.png" />
+                          <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                        <Avatar>
+                          <AvatarImage src="https://github.com/leerob.png" />
+                          <AvatarFallback>LR</AvatarFallback>
+                        </Avatar>
+                        <Avatar>
+                          <AvatarImage src="https://github.com/serafimcloud.png" />
+                          <AvatarFallback>SC</AvatarFallback>
+                        </Avatar>
+                        <AvatarMore count={2} />
+                      </AvatarGroup>
+                    <Example/>
+                    {/* <GrantCustom/> */}
+                    </div>
+                  }
+                {/* </div> */}
+              </CardContent>
+            </Card>
+          </main>
           <footer>
             <div className='text-muted-foreground mx-auto flex size-full max-w-7xl items-center justify-between gap-3 px-4 py-3 max-sm:flex-col sm:gap-6 sm:px-6'>
               <p className='text-sm text-balance max-sm:text-center'>
