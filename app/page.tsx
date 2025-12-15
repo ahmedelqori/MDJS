@@ -60,6 +60,7 @@ import PDFViewer from '@/components/components/PDFViewer'
 import DataTable from '@/components/components/DataTable'
 import Example from './example/page'
 import GrantCustom from '@/components/grant-custom'
+import FileReview from '@/components/file-review'
 interface TreeDataItem {
     id: string
     name: string
@@ -409,9 +410,9 @@ const ApplicationShell = () => {
               </div>
             </div>
           </header>
-          <main className='mx-auto size-full max-w-7xl flex-1 px-4 py-6 sm:px-6'>
-            <Card className='h-250'>
-              <CardContent className='h-full'>
+          <main className='max-w-7xl flex-1 px-4 py-6 sm:px-6 flex flex-col min-h-0'>
+            <Card className='flex-1 flex min-h-0'>
+              <CardContent className='flex-1 h-auto p-0 overflow-hidden'>
                 {/* <div className='h-full rounded-md border bg-[repeating-linear-gradient(45deg,var(--muted),var(--muted)_1px,var(--card)_2px,var(--card)_15px)]' > */}
                   {/* <TreeView data={data} /> */}
                   {route === Routes.Dashboard && 
@@ -447,6 +448,11 @@ const ApplicationShell = () => {
                     {/* <GrantCustom/> */}
                     </div>
                   }
+                  {route === Routes.Files && (
+                    <div className='w-full h-full min-h-0'>
+                      <FileReview />
+                    </div>
+                  )}
                 {/* </div> */}
               </CardContent>
             </Card>

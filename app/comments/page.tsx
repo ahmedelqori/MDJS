@@ -4,8 +4,8 @@ import DocumentTracker from "@/components/files"
 const Page = () =>
 {
   return <>
-    <CommentsSection />
-    {/* <DocumentTracker /> */}
+    {/* <CommentsSection /> */}
+    <DocumentTracker />
   </>
 }
 
